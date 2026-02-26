@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/database/database.dart';
 import 'package:todo_app/utils/todo_list.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,34 +11,49 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-TextEditingController newTaskController = TextEditingController();
+  TextEditingController newTaskController = TextEditingController();
 
+  final _mybox = Hive.box('mybox');
+  TodoDatabase db = TodoDatabase();
 
-  List todoList = [
-    ['Learn Flutter', false],
-    ['Go to GYM', false],
-  ];
+  @override
+void initState() {
+  super.initState();
+
+  if (_mybox.get('TODOLIST') == null) {
+    db.createData();
+  } else {
+    db.loadData();
+  }
+}
+
+  // List todoList = [
+  //   ['Learn Flutter', false],
+  //   ['Go to GYM', false],
+  // ];
 
   void checkboxChanged(int index) {
-    todoList[index][1] = !todoList[index][1];
+    db.todoList[index][1] = !db.todoList[index][1];
     setState(() {});
+    db.updateDatabase();
   }
 
-  void saveNewTask(){
-
-   if(newTaskController.text.isEmpty){
-    return;
-   }
+  void saveNewTask() {
+    if (newTaskController.text.isEmpty) {
+      return;
+    }
     setState(() {
-      todoList.add([newTaskController.text,false]);
+      db.todoList.add([newTaskController.text, false]);
       newTaskController.clear();
     });
+    db.updateDatabase();
   }
 
-  void deleteTask(int index){
+  void deleteTask(int index) {
     setState(() {
-      todoList.removeAt(index);
+      db.todoList.removeAt(index);
     });
+    db.updateDatabase();
   }
 
   @override
@@ -51,11 +68,11 @@ TextEditingController newTaskController = TextEditingController();
       ),
 
       body: ListView.builder(
-        itemCount: todoList.length,
+        itemCount: db.todoList.length,
         itemBuilder: (context, index) {
           return TodoList(
-            taskName: todoList[index][0],
-            taskCompleted: todoList[index][1],
+            taskName: db.todoList[index][0],
+            taskCompleted: db.todoList[index][1],
             onChanged: (value) => checkboxChanged(index),
             deleteFunction: (context) => deleteTask(index),
           );
@@ -78,7 +95,7 @@ TextEditingController newTaskController = TextEditingController();
                     borderRadius: BorderRadius.circular(15),
                   ),
 
-                  focusedBorder:  OutlineInputBorder(
+                  focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.deepPurple),
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -86,9 +103,12 @@ TextEditingController newTaskController = TextEditingController();
               ),
             ),
           ),
-          FloatingActionButton(onPressed: () {
-            saveNewTask();
-          }, child: Icon(Icons.add)),
+          FloatingActionButton(
+            onPressed: () {
+              saveNewTask();
+            },
+            child: Icon(Icons.add),
+          ),
         ],
       ),
     );

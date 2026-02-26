@@ -1,8 +1,9 @@
-# 📝 Flutter Todo App
+# 📝 Flutter Todo App (With Hive Storage)
 
 A simple and clean Todo List application built using Flutter.
 
-This project was created to practice basic Flutter concepts like state management, list handling, custom widgets, and user interaction.
+This version uses Hive local database to permanently store tasks.
+Now, tasks will remain saved even after closing or restarting the app.
 
 ---
 
@@ -10,10 +11,10 @@ This project was created to practice basic Flutter concepts like state managemen
 
 - ➕ Add new tasks
 - ✅ Mark tasks as completed
-- 🗑 Delete tasks using slide action
+- 🗑 Delete tasks with slide action
 - ✏️ Strike-through effect for completed tasks
+- 💾 Permanent local storage using Hive
 - 🎨 Simple and clean UI
-
 
 ---
 
@@ -21,7 +22,23 @@ This project was created to practice basic Flutter concepts like state managemen
 
 - Flutter
 - Dart
+- Hive (Local Database)
 - flutter_slidable package
+
+---
+
+## 💾 How Data is Stored
+
+This app uses Hive local database.
+
+- Tasks are saved inside a Hive box.
+- Data is stored in the device's internal storage.
+- Data will remain saved even after:
+  - Closing the app
+  - Restarting the device
+- Data will be removed only if:
+  - The app is uninstalled
+  - App data is cleared manually
 
 ---
 
@@ -32,9 +49,23 @@ lib/
 │
 ├── main.dart
 ├── home_screen.dart
+├── database/
+│   └── database.dart
 └── utils/
     └── todo_list.dart
 ```
+
+
+
+## 📱 Screenshots
+
+### Home Screen
+![Home](assets/screenshots/s1.jpg)
+
+### Delete Task
+![Task Delete](assets/screenshots/s2.jpg)
+
+
 
 ---
 
@@ -46,7 +77,7 @@ lib/
 git clone https://github.com/Faisal-Haroon/flutter-todo-app.git
 ```
 
-### 2️⃣ Navigate into the project directory
+### 2️⃣ Navigate into the project folder
 
 ```bash
 cd flutter-todo-app
@@ -65,39 +96,29 @@ flutter run
 ```
 
 Make sure:
-- Flutter is properly installed
-- Emulator is running OR a physical device is connected
+- Flutter is installed properly
+- An emulator is running OR a physical device is connected
 
 ---
 
-## 📌 Current Limitation
+## 📌 Learning Purpose
 
-Right now, tasks are stored in memory only.
+This project was built to practice:
 
-If the app is restarted, all tasks will be lost.
-
-Local storage (Hive) will be added in the next version to permanently save tasks.
-
----
-
-## 🎯 Purpose of This Project
-
-This project was built for learning purposes to:
-
-- Understand StatefulWidget
-- Work with ListView.builder
-- Create reusable custom widgets
-- Handle user input
-- Practice UI design in Flutter
+- StatefulWidget
+- ListView.builder
+- Custom Widgets
+- Local Storage with Hive
+- Basic CRUD operations
 
 ---
 
 ## 📈 Future Improvements
 
-- Add local storage using Hive
-- Add edit task feature
+- Edit task feature
 - Add task categories
 - Improve UI design
+- Add dark mode
 
 ---
 
