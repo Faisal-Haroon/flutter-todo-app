@@ -65,8 +65,6 @@ lib/
 ### Delete Task
 ![Task Delete](assets/screenshots/s2.jpg)
 
-
-
 ---
 
 ## ▶️ How to Run This Project
@@ -129,4 +127,4 @@ BS Software Engineering Student
 
 ---
 
-⭐ If you like this project, consider giving it a star!
+⭐ If you like this project, consider giving it a star!!!
